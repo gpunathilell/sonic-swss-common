@@ -82,7 +82,6 @@ namespace swss {
 #define APP_SFLOW_SAMPLE_RATE_TABLE_NAME  "SFLOW_SAMPLE_RATE_TABLE"
 #define APP_TX_ERR_TABLE_NAME           "TX_ERR_APPL"
 
-
 #define APP_NAT_TABLE_NAME              "NAT_TABLE"
 #define APP_NAPT_TABLE_NAME             "NAPT_TABLE"
 #define APP_NAT_TWICE_TABLE_NAME        "NAT_TWICE_TABLE"
@@ -442,7 +441,6 @@ namespace swss {
 #define CFG_SAG_TABLE_NAME                          "SAG"
 #define CFG_PORT_TX_ERR_TABLE_NAME                  "TX_ERR_CFG"
 
-
 /***** STATE DATABASE *****/
 
 #define STATE_SWITCH_CAPABILITY_TABLE_NAME          "SWITCH_CAPABILITY"
@@ -518,7 +516,6 @@ namespace swss {
 
 #define STATE_TRANSCEIVER_INFO_TABLE_NAME           "TRANSCEIVER_INFO"
 #define STATE_TX_ERR_TABLE_NAME                     "TX_ERR_STATE"
-
 
 // ACL table and ACL rule table
 #define STATE_ACL_TABLE_TABLE_NAME                  "ACL_TABLE_TABLE"
