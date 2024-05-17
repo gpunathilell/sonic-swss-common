@@ -108,6 +108,17 @@ std::map<std::string, std::string> DBInterface::get_all(const std::string& dbNam
     return blockable<std::map<std::string, std::string>>(innerfunc, dbName, blocking);
 }
 
+std::map<std::string, std::string> DBInterface::get_all_bin(const std::string& dbName, const std::string& hash, bool blocking)
+{
+    auto innerfunc = [&]
+    {
+        std::map<std::string, std::string> map;
+        m_redisClient.at(dbName).hgetall(hash, std::inserter(map, map.end()));
+        return map;
+    };
+    return blockable<std::map<std::string, std::string>>(innerfunc, dbName, blocking);
+}
+
 std::vector<std::string> DBInterface::keys(const std::string& dbName, const char *pattern, bool blocking)
 {
     auto innerfunc = [&]

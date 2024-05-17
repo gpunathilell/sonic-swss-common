@@ -124,6 +124,20 @@
     }
 %}
 
+%typemap(out) std::map<std::string, std::string> %{
+    {
+        PyObject* py_dict = PyDict_New();
+        for (const auto& item: $1) {
+            PyObject* py_key = PyBytes_FromStringAndSize(item.first.data(),item.first.size());
+            PyObject* py_value = PyBytes_FromStringAndSize(item.second.data(),item.second.size());
+            PyDict_SetItem(py_dict, py_key, py_value);
+            Py_DECREF(py_key);
+            Py_DECREF(py_value);
+        }
+        $result = py_dict;
+    }
+%}
+
 %pythoncode %{
     def _FieldValueMap__get(self, key, default=None):
         if key in self:
@@ -282,6 +296,9 @@ T castSelectableObj(swss::Selectable *temp)
 %apply std::vector<std::vector<std::pair<std::string, std::string>>>& OUTPUT {std::vector<std::vector<std::pair<std::string, std::string>>> &fvss};
 %apply std::vector<std::pair<std::string, std::string>>& OUTPUT {std::vector<std::pair<std::string, std::string>> &ovalues};
 %apply std::string& OUTPUT {std::string &value};
+%apply std::map<std::string,std::string>{
+    std::map<std::string, std::string> SonicV2Connector_Native::get_all_bin(const std::string& db_name, const std::string& _hash, bool blocking)
+};
 %include "table.h"
 #ifdef ENABLE_YANG_MODULES
 %include "decoratortable.h"

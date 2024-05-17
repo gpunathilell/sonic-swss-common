@@ -94,6 +94,11 @@ std::map<std::string, std::string> SonicV2Connector_Native::get_all(const std::s
     return m_dbintf.get_all(db_name, _hash, blocking);
 }
 
+std::map<std::string, std::string> SonicV2Connector_Native::get_all_bin(const std::string& db_name, const std::string& _hash, bool blocking)
+{
+    return m_dbintf.get_all_bin(db_name, _hash, blocking);
+}
+
 void SonicV2Connector_Native::hmset(const std::string& db_name, const std::string &key, const std::map<std::string, std::string> &values)
 {
     return m_dbintf.hmset(db_name, key, values);
