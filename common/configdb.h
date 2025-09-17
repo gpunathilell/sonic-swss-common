@@ -66,7 +66,7 @@ func NewConfigDBConnector(a ...interface{}) *ConfigDBConnector {
                 namespace = ''
             super(ConfigDBConnector, self).__init__(use_unix_socket_path = use_unix_socket_path, namespace = namespace)
             # Initialize pubsub lazily to avoid accessing unconnected database
-            self.pubsub = None
+            self.pubsub = self.get_redis_client(self.db_name).pubsub()
 
             # Trick: to achieve static/instance method "overload", we must use initize the function in ctor
             # ref: https://stackoverflow.com/a/28766809/2514803
@@ -207,12 +207,7 @@ func NewConfigDBConnector(a ...interface{}) *ConfigDBConnector {
                 handler = self.handlers[table]
                 handler(table, key, data)
 
-        def _ensure_pubsub(self):
-            if self.pubsub is None:
-                self.pubsub = self.get_redis_client(self.db_name).pubsub()
-
         def subscribe(self, table, handler, fire_init_data=False):
-            self._ensure_pubsub()
             self.pubsub.psubscribe("__keyspace@{}__:{}*".format(self.get_dbid(self.db_name), table))
             self.handlers[table] = handler
             self.fire_init_data[table] = fire_init_data
